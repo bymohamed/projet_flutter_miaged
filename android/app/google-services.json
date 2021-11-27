@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "597669352852",
+    "project_id": "miaged-a6840",
+    "storage_bucket": "miaged-a6840.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597669352852:android:1b208d3de28eb9f360ab81",
+        "android_client_info": {
+          "package_name": "benyamnamohamed.tp2_note"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597669352852-5ppjudai6bmrkbtne59pq7jjvs4rn5ak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIu8-gq4_kgnifoW3pWTan-vkSyXmvwFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597669352852-5ppjudai6bmrkbtne59pq7jjvs4rn5ak.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "597669352852-f5f393f1ar55ih5tf6psv9vde0io9mk1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "benyamnamohamed.tp2Note"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
