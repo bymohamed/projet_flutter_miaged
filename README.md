@@ -12,5 +12,12 @@ Application de Mohamed BEN YAMNA
  US#6 : Filtrer sur la liste des vêtements
 
 ## Bonus Perso
- Mot de passe oublié
- Changer le mot de passe
+ 1. Mot de passe oublié
+ 2. Changer le mot de passe
+ 3. Sign up
+ 4. Afficher photo au lieu de lien seulement
+
+## TODO
+    1. ajouter article
+    2. panier
+    3. Filtrer vetement

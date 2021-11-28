@@ -1,18 +1,20 @@
 //@dart=2.9
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tp2_note/details.dart';
 import 'package:tp2_note/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'login.dart';
 
-class HomeContent extends StatefulWidget {
+class DetailsContent extends StatefulWidget {
+  final Map<String, dynamic> data;
+  const DetailsContent({Key key, this.data}) : super(key: key);
+
   @override
-  _HomeContentState createState() => _HomeContentState();
+  _DetailsContentState createState() => _DetailsContentState();
 }
 
-class _HomeContentState extends State<HomeContent> {
+class _DetailsContentState extends State<DetailsContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,41 +27,19 @@ class _HomeContentState extends State<HomeContent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Column(
-                  children: [
-                    StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: FirebaseFirestore.instance.collection('articles').snapshots(),
-                      builder: (_, snapshot) {
-                        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
-
-                        if (snapshot.hasData) {
-                          final docs = snapshot.data.docs;
-                          return ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: docs.length,
-                            itemBuilder: (_, i) {
-                              final data = docs[i].data();
-                              return ListTile(
-                                title: Text(data['nom']),
-                                subtitle: Text(data['prix']),
-                                onTap: (){
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                      builder: (context) => DetailsContent(data: data),
-                                      ));
-                                },
-                              );
-                            },
-                          );
-                        }
-
-                        return Center(child: CircularProgressIndicator());
-                      },
-                    )
-                  ],
-                ),
+            Column(
+              children: [
+                Text(widget.data['nom']),
+                Image.network(widget.data['url_photo'], height: 450),
+                Text("Prix : " + widget.data['prix']),
+                Text("Taille : " + widget.data['taille']),
+                FlatButton(
+                    onPressed: ajouter_au_panier,
+                    child: Container(
+                        color: Colors.cyan,
+                        child: const Text("ajouter au panier"))),
+              ],
+            ),
             Expanded(
                 child: Align(
               alignment: Alignment.bottomCenter,
@@ -103,5 +83,5 @@ class _HomeContentState extends State<HomeContent> {
     await FirebaseAuth.instance.signOut();
   }
 
-
+  void ajouter_au_panier() {}
 }
