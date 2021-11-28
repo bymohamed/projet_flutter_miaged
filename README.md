@@ -1,16 +1,16 @@
 # tp2_note
 
-A new Flutter application.
+Application de Mohamed BEN YAMNA
 
-## Getting Started
+## MVP
 
-This project is a starting point for a Flutter application.
+ US#1 : [MVP] Interface de login
+ US#2 : [MVP] Liste de vêtements
+ US#3 : [MVP] Détail d’un vêtement
+ US#4 : [MVP] Le panier
+ US#5 : [MVP] Profil utilisateur
+ US#6 : Filtrer sur la liste des vêtements
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Bonus Perso
+ Mot de passe oublié
+ Changer le mot de passe
