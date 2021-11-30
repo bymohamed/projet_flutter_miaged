@@ -1,6 +1,7 @@
 //@dart=2.9
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tp2_note/details.dart';
 import 'package:tp2_note/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +13,10 @@ class HomeContent extends StatefulWidget {
   _HomeContentState createState() => _HomeContentState();
 }
 
+
+
 class _HomeContentState extends State<HomeContent> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +88,7 @@ class _HomeContentState extends State<HomeContent> {
                           child: Text('Logout')),
                       FlatButton(
                           onPressed: () {
-                            _navigateToNextScreen(context);
+                            _navigateToProfile(context);
                           },
                           child: Text('Profile')),
                     ]),
@@ -94,7 +98,12 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  void _navigateToNextScreen(BuildContext context) {
+  void _navigateToProfile(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ProfileContent()));
+  }
+
+  void _navigateToPanier(BuildContext context) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => ProfileContent()));
   }
@@ -104,4 +113,6 @@ class _HomeContentState extends State<HomeContent> {
   }
 
 
+
 }
+

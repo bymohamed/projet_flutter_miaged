@@ -1,59 +1,70 @@
 //@dart=2.9
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transparent_image/transparent_image.dart';
 
-import 'login.dart';
+String userid, useremail, userphotourl;
 
 class ProfileContent extends StatefulWidget {
   @override
   _ProfileContentState createState() => _ProfileContentState();
 }
 
-class _ProfileContentState extends State<ProfileContent> {
+
+
+class _ProfileContentState extends State<ProfileContent>{
+
+  Future<Null> _function() async {
+    User user = FirebaseAuth.instance.currentUser;
+
+    userid = user.uid;
+    useremail = user.email;
+    userphotourl = "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png";
+
+    }
+  @override
+  void initState() {
+    super.initState();
+    _function();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile Page'),
+        title: const Text('Profile Page'),
         backgroundColor: Colors.green,
       ),
-      body: Center(
+      body: Container(
+        alignment: Alignment.center,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text('Profile'),
-            FutureBuilder(
-              initialData: "Loading text..",
-              future: getEmail(),
-              builder: (BuildContext context, AsyncSnapshot<String> text) {
-                return new Text(text.data);
-              },
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: userphotourl,
+                height: 150.0,
+                width: 150.0,
+                fadeInDuration: const Duration(milliseconds: 1000),
+                alignment: Alignment.topCenter,
+                fit: BoxFit.contain,
+              ),
             ),
-            Container(
-                width: 200.0,
-                child: TextFormField(
-                    decoration: new InputDecoration.collapsed(
-                        hintText: 'old password'
-                    )
-                )
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 8.0),
+              child: Text(
+                "TEST",
+                style: TextStyle(
+                    fontSize: 22.0, fontWeight: FontWeight.bold),
+              ),
             ),
-            Container(
-                width: 200.0,
-                child: TextFormField(
-                  decoration: new InputDecoration.collapsed(
-                      hintText: 'new password'
-                  ),
-
-                )
+            Text(
+              useremail,
+              style: const TextStyle(fontSize: 18.0,color: Colors.blueAccent),
             ),
-            Container(
-                width: 200.0,
-                child: TextFormField(
-                    decoration: new InputDecoration.collapsed(
-                        hintText: 'repeat new password'
-                    )
-                )
-            )
           ],
         ),
       ),
@@ -77,8 +88,6 @@ class _ProfileContentState extends State<ProfileContent> {
     });
   }
 
-  Future<String> getEmail() async {
-    User user = await FirebaseAuth.instance.currentUser;
-    return user.email;
-  }
 }
+
+
