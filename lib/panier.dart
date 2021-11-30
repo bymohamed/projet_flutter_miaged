@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tp2_note/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tp2_note/home.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'login.dart';
 
-class DetailsContent extends StatefulWidget {
+class PanierContent extends StatefulWidget {
   final Map<String, dynamic> data;
-  const DetailsContent({Key key, this.data}) : super(key: key);
+  const PanierContent({Key key, this.data}) : super(key: key);
 
   @override
-  _DetailsContentState createState() => _DetailsContentState();
+  _PanierContentState createState() => _PanierContentState();
 }
 
-class _DetailsContentState extends State<DetailsContent> {
+class _PanierContentState extends State<PanierContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,16 +31,24 @@ class _DetailsContentState extends State<DetailsContent> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
             Column(
-              children: [
-                Text(widget.data['nom']),
-                Image.network(widget.data['url_photo'], height: 450),
-                Text("Prix : " + widget.data['prix']),
-                Text("Taille : " + widget.data['taille']),
-                FlatButton(
-                    onPressed: ajouterAuPanier,
-                    child: Container(
-                        color: Colors.cyan,
-                        child: const Text("ajouter au panier"))),
+                children: [
+                for(var element in HomeContent.panier)
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                  Column(children: [
+                    Text(element['nom']),
+                    Text("Taille : " + element['taille']),
+                  ]),
+                  Image.network(element['url_photo'], height: 50),
+                  Text("Prix : " + element['prix']),
+                      TextButton(onPressed:() => {supprimerElementAuPanier(element), setState(() {})
+                      }, child: Text("supprimer"))
+
+                ]
+                )
+
+
               ],
             ),
             Expanded(
@@ -85,15 +94,9 @@ class _DetailsContentState extends State<DetailsContent> {
     await FirebaseAuth.instance.signOut();
   }
 
-  void ajouterAuPanier() {
-    CollectionReference dbPanier = FirebaseFirestore.instance.collection('panier');
-    FirebaseFirestore.instance.runTransaction((Transaction tx) async {
-      var _result = await dbPanier.add({
-          'article':widget.data,
-          'utilisateur':FirebaseAuth.instance.currentUser.uid
-      }
-      );
-    });
+
+  void supprimerElementAuPanier(Map o){
+    HomeContent.panier.remove(o);
   }
 
 

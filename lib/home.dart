@@ -3,16 +3,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tp2_note/details.dart';
+import 'package:tp2_note/panier.dart';
 import 'package:tp2_note/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'login.dart';
 
 class HomeContent extends StatefulWidget {
+  static List<Map> panier = new List();
+
   @override
   _HomeContentState createState() => _HomeContentState();
 }
-
 
 
 class _HomeContentState extends State<HomeContent> {
@@ -91,6 +93,11 @@ class _HomeContentState extends State<HomeContent> {
                             _navigateToProfile(context);
                           },
                           child: Text('Profile')),
+                      FlatButton(
+                          onPressed: () {
+                            _navigateToPanier(context);
+                          },
+                          child: Text('Panier'))
                     ]),
               ),
             )),
@@ -105,12 +112,15 @@ class _HomeContentState extends State<HomeContent> {
 
   void _navigateToPanier(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ProfileContent()));
+        .push(MaterialPageRoute(builder: (context) => PanierContent()));
   }
 
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
   }
+
+
+
 
 
 

@@ -3,6 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tp2_note/profile.dart';
+import "package:tp2_note/home.dart";
+import 'package:fluttertoast/fluttertoast.dart';
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -36,7 +40,7 @@ class _DetailsContentState extends State<DetailsContent> {
                 Text("Prix : " + widget.data['prix']),
                 Text("Taille : " + widget.data['taille']),
                 FlatButton(
-                    onPressed: ajouterAuPanier,
+                    onPressed: () => ajouterElementAuPanier(widget.data),
                     child: Container(
                         color: Colors.cyan,
                         child: const Text("ajouter au panier"))),
@@ -85,16 +89,14 @@ class _DetailsContentState extends State<DetailsContent> {
     await FirebaseAuth.instance.signOut();
   }
 
-  void ajouterAuPanier() {
-    CollectionReference dbPanier = FirebaseFirestore.instance.collection('panier');
-    FirebaseFirestore.instance.runTransaction((Transaction tx) async {
-      var _result = await dbPanier.add({
-          'article':widget.data,
-          'utilisateur':FirebaseAuth.instance.currentUser.uid
-      }
-      );
-    });
+  void ajouterElementAuPanier(Object o){
+    HomeContent.panier.add(o);
+    Fluttertoast.showToast(msg: "element ajoute avec succees");
+
   }
+
+
+
 
 
 
