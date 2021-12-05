@@ -21,6 +21,4 @@ https://drive.google.com/drive/folders/1CGzmwqnaK49R7P3nsQ8NNigaCzvGW4Jw?usp=sha
  4. Afficher photo au lieu de lien seulement
 
 ## TODO
-    1. ajouter article
-    2. panier
-    3. Filtrer vetement
+    rien
