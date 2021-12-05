@@ -18,6 +18,7 @@ class HomeContent extends StatefulWidget {
 
 
 class _HomeContentState extends State<HomeContent> {
+  Stream articles = FirebaseFirestore.instance.collection('articles').snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,28 @@ class _HomeContentState extends State<HomeContent> {
               children: [
                 Column(
                   children: [
+
+
+                    DropdownButton<String>(
+                      items: <String>['tous','homme', 'femme', 'enfant'].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      hint: Text("filtre"),
+                      onChanged: (S){
+                        if(S!="tous")
+                          articles = FirebaseFirestore.instance.collection('articles').where("categorie", isEqualTo: S).snapshots();
+                        else
+                          articles = FirebaseFirestore.instance.collection('articles').snapshots();
+                        setState(() {});
+                      },
+                    ),
+
+
                     StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: FirebaseFirestore.instance.collection('articles').snapshots(),
+                      stream: articles,
                       builder: (_, snapshot) {
                         if (snapshot.hasError) return Text('Error = ${snapshot.error}');
 

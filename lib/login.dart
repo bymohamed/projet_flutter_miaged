@@ -207,15 +207,14 @@ class _LOGINState extends State<LOGIN> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    "LOG IN",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  Container(width: 15),
-                  Container(
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.lightGreen),
-                    child: IconButton(
+
+                  SizedBox(
+
+                    child: TextButton(
+                        child : const Text(
+                          "LOG IN",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             setState(() {
@@ -223,11 +222,7 @@ class _LOGINState extends State<LOGIN> {
                             });
                           }
                         },
-                        icon: Icon(Icons.arrow_forward_rounded),
-                        iconSize: 25,
-                        color: Colors.black54),
-                    width: 40,
-                    height: 40,
+                    ),
                   )
                 ]),
           ),

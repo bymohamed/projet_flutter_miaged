@@ -22,7 +22,7 @@ class _PanierContentState extends State<PanierContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Panier'),
         backgroundColor: Colors.green,
       ),
       body: Center(
@@ -31,57 +31,38 @@ class _PanierContentState extends State<PanierContent> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
             Column(
-                children: [
-                for(var element in HomeContent.panier)
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                  Column(children: [
-                    Text(element['nom']),
-                    Text("Taille : " + element['taille']),
-                  ]),
-                  Image.network(element['url_photo'], height: 50),
-                  Text("Prix : " + element['prix']),
-                      TextButton(onPressed:() => {supprimerElementAuPanier(element), setState(() {})
-                      }, child: Text("supprimer"))
-
-                ]
-                )
-
-
+              children: [
+                for (var element in HomeContent.panier)
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(children: [
+                          Text(element['nom']),
+                          Text("Taille : " + element['taille']),
+                        ]),
+                        Image.network(element['url_photo'], height: 50),
+                        Text("Prix : " + element['prix']),
+                        TextButton(
+                            onPressed: () => {
+                                  supprimerElementAuPanier(element),
+                                  setState(() {})
+                                },
+                            child: Text("supprimer")),
+                      ])]),
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                  Text("Somme : ",
+                      style: TextStyle(height: 5, fontSize: 25)),
+                    Text(somme().toString(),
+                        style: TextStyle(height: 5, fontSize: 25))
+                  ],
+                ))
               ],
-            ),
-            Expanded(
-                child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                color: Colors.green,
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-//          height: 80,
-//          width: 150,
-//          decoration: BoxDecoration(
-//              color: Colors.lightGreen, borderRadius: BorderRadius.circular(10)),
-
-                    children: [
-                      FlatButton(
-                          onPressed: () {
-                            _signOut();
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => LOGIN()),
-                            );
-                          },
-                          child: Text('Logout')),
-                      FlatButton(
-                          onPressed: () {
-                            _navigateToNextScreen(context);
-                          },
-                          child: Text('Profile')),
-                    ]),
-              ),
-            )),
-          ])),
+          )),
     );
   }
 
@@ -94,11 +75,14 @@ class _PanierContentState extends State<PanierContent> {
     await FirebaseAuth.instance.signOut();
   }
 
-
-  void supprimerElementAuPanier(Map o){
+  void supprimerElementAuPanier(Map o) {
     HomeContent.panier.remove(o);
   }
 
-
-
+  double somme() {
+    double sum = 0;
+    for (var element in HomeContent.panier)
+      sum += double.parse(element['prix']);
+    return sum;
+  }
 }
